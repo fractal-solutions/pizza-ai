@@ -26,7 +26,7 @@ function Chat() {
     return (
       <>
         <TopBar/>
-            <div className="p-6 pt-20 pb-28 mb-8 scroll-auto overflow-x-hidden overflow-y-scroll snap-y snap-mandatory" id="chat">
+            <div className="p-6 pt-20 pb-20 mb-8 scroll-auto overflow-x-hidden overflow-y-scroll snap-y snap-mandatory" id="chat">
                 <For each={messages()}>{ 
                     (payload,i) => 
                     payload.actor === 1 ? <AIChatBubble payload = {payload} setMessages = {setMessages}/> : <UserChatBubble payload = {payload}  setMessages = {setMessages}/> 
@@ -49,6 +49,7 @@ function UserInputBox() {
         console.log(messages())
         setValue('')
         document.getElementById("user-input").value = ''
+        document.getElementById("chat").lastElementChild.scrollIntoView()
     }
 
     return (

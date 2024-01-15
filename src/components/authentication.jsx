@@ -1,8 +1,8 @@
 export default function Authentication() {
 
     return (
-      <div  className = "flex items-center justify-center">
-        <div role="tablist" className="tabs tabs-bordered p-4 w-5/6 max-w-screen-md mx-auto">
+      <div  className = "flex items-center justify-center pt-20">
+        <div role="tablist" className="tabs tabs-bordered p-4 w-4/6 max-w-screen-md mx-auto">
           <input type="radio" name="my_tabs_1" role="tab" className="tab ml-10 mb-2" aria-label="📲" />
           <div role="tabpanel" className="tab-content flex-col">
             <input type="text" placeholder="Username" className="input input-bordered w-5/6 max-w-xs m-1 text-xs" />
