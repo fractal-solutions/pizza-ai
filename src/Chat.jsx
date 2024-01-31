@@ -17,11 +17,11 @@ function Chat() {
         actor: 2 ,
         message: "Hi, I would like a pizza, kindly"
     }
-    setMessages([initMessage,initReply])
-    const m = messages()
-    m.push(initMessage)
-    setMessages(m)
-    console.log(messages())
+    setMessages([initMessage])
+    // const m = messages()
+    // m.push(initMessage)
+    // setMessages(m)
+    //console.log(messages())
   
     return (
       <>
@@ -43,10 +43,22 @@ function Chat() {
 
 function UserInputBox() {
     const [value, setValue] = createSignal('')
-    const update = (value) => {
+    const update = async (value) => {
+        if(!value) {
+            console.log("can't shoot blanks") 
+            return
+        }
         const x = {actor: 2, message: value} 
         setMessages([...messages(),x])
-        console.log(messages())
+        document.getElementById("chat").lastElementChild.scrollIntoView()
+
+        await sendMessage(value).then((reply) => {
+            const y = {actor: 1, message: reply}
+            setMessages([...messages(),y])
+            document.getElementById("chat").lastElementChild.scrollIntoView()
+            console.log(messages())
+        })
+
         setValue('')
         document.getElementById("user-input").value = ''
         document.getElementById("chat").lastElementChild.scrollIntoView()
@@ -80,6 +92,26 @@ function UserChatBubble(props) {
             <div className="chat-bubble">{props.payload.message}</div>
         </div>
     )
+}
+
+
+// Send message to model
+async function sendMessage(message) {
+    try {
+      const response = await fetch('http://localhost:4444/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      })
+      const data = await response.json()
+      //console.log(data)
+      return data.content
+
+    } catch (error) {
+      console.error('Error:', error)
+    }
 }
 
   
